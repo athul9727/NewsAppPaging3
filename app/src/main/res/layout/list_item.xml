@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="imagedata"
+            type="com.example.newsapp_paging3.repository.model.Article" />
+
+        <variable
+            name="imageClickInterface"
+            type="com.example.newsapp_paging3.view.ImageClickListener" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardElevation="5dp"
+        app:cardBackgroundColor="@color/white"
+        android:onClick="@{() -> imageClickInterface.onItemClick(imagedata)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="268dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imagedata_url"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/white"
+                app:imageUrl="@{imagedata.urlToImage}"
+                app:layout_constraintBottom_toTopOf="@+id/imagedata_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/imagedata_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@{`Author: `+imagedata.author}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagedata_title"
+                tools:text="author" />
+
+            <TextView
+                android:id="@+id/imagedata_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{imagedata.title}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/imagedata_author"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagedata_url"
+                tools:text="title" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:onClick="@{() -> imageClickInterface.onBookMarkClick(imagedata)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                card_view:srcCompat="@drawable/ic_baseline_bookmarks_24" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>
