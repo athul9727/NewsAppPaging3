@@ -102,9 +102,9 @@ class ImagesFragment : Fragment() , ImageClickListener {
 //        })
 
 
-//        viewModel.message.observe(viewLifecycleOwner, Observer {
-//            Toast.makeText(context,it,Toast.LENGTH_SHORT).show()
-//        })
+        viewModel.message.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context,it,Toast.LENGTH_SHORT).show()
+        })
 
         lifecycleScope.launch {
             viewModel.loadedlist.collectLatest {
@@ -128,7 +128,6 @@ class ImagesFragment : Fragment() , ImageClickListener {
                     else -> null
                 }
                 errorState?.let {
-                    mDataBinding.error.text = it.error.message
                     Toast.makeText(requireContext(), it.error.message, Toast.LENGTH_LONG).show()
                 }
             }
@@ -146,6 +145,9 @@ class ImagesFragment : Fragment() , ImageClickListener {
         mDataBinding.recycleview.layoutManager = LinearLayoutManager(activity)
         mDataBinding.recycleview.setHasFixedSize(true)
         // recycleview.setItemViewCacheSize(12)
+        recAdapter.withLoadStateFooter(
+            footer = NewsLoadStateAdapter { recAdapter.retry() }
+        )
         mDataBinding.recycleview.adapter = recAdapter
 
 //        mDataBinding.recycleview.addOnScrollListener(object : PaginationScrollListener(

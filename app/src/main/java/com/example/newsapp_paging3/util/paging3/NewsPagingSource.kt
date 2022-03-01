@@ -8,9 +8,11 @@ import com.example.newsapp_paging3.repository.Api
 import com.example.newsapp_paging3.repository.Repository
 import com.example.newsapp_paging3.repository.model.Article
 import com.example.newsapp_paging3.util.AppResult
+import com.example.newsapp_paging3.util.SingleLiveEvent
 
 class NewsPagingSource(
     private val str:String,
+    private val showError:SingleLiveEvent<String>,
     private val repository: Repository,
 )
     : PagingSource<Int, Article>(){
@@ -27,7 +29,7 @@ class NewsPagingSource(
                     imageList = response.successData.articles.toMutableList()
 
                 }
-                else -> {}
+                is AppResult.Error -> showError.value = response.exception.message
             }
 
 

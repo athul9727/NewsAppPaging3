@@ -39,8 +39,8 @@ class ViewModel @Inject constructor(
     val message: SingleLiveEvent<String>
         get() {  return statusmessage }
 
-    val loadedlist: Flow<PagingData<Article>> = Pager(PagingConfig(pageSize = 20)) {
-        NewsPagingSource(inputtext.value!!,repository)
+    var loadedlist: Flow<PagingData<Article>> = Pager(PagingConfig(pageSize = 20)) {
+        NewsPagingSource(inputtext.value!!,showError,repository)
     }.flow.cachedIn(viewModelScope)
 
 
